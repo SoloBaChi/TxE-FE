@@ -5,18 +5,17 @@ import InputField from "../../registrationPage/eventregistration/components/Inpu
 import InputFieldNon from "../../registrationPage/eventregistration/components/InputFieldNon/InputFieldNon";
 import TextArea from "../../registrationPage/eventregistration/components/TextArea/TextArea";
 import FormBtn from "../../registrationPage/eventregistration/components/Buttons/FormButton";
-import FormVector from "../FormVector";
-import Navbar from "../../landingPage/sections/Navbar";
 import Footer from "../../landingPage/sections/Footer";
 import ApplyForTechSupportCSS from "../techSupport/ApplyForTechSupport.module.css";
-import GrantSuccess from "../../modals/GrantSuccess";
 import TechSuccess from "../../modals/TechSuccess";
+import { AlreadyTech } from "../../modals/AlreadyTech";
 import "../../landingPage/Landing.css";
 import { NetworkError } from "../../modals/NetworkError";
 import Sponsors from "../../landingPage/sections/Sponsors";
 import ImageUploader from "../category/validated-applicants/uploader/ImageUploader";
 import { RequiredFields } from "../../modals/RequiredFields";
 import { baseUrl } from "../../api/BaseURL";
+import Nav from "../../emailTemplate/Nav";
 
 export default function ApplyForTechSupport() {
 	const [isEmailVerified, setIsEmailVerified] = useState(false);
@@ -24,6 +23,7 @@ export default function ApplyForTechSupport() {
 	const [showTechSuccess, setShowTechSuccess] = useState(false);
 	const [showRequiredFields, setShowRequiredFields] = useState(false);
 	const [showNetworkError, setShowNetworkError] = useState(false);
+	const [showAlreadyTech, setShowAlreadyTech] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [imageChange, setImageChange] = useState("");
@@ -42,6 +42,8 @@ export default function ApplyForTechSupport() {
 		setDidYouParticipateInFirstScholarship,
 	] = useState("");
 	const [aboutYou, setAboutYou] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
 	const { firstName, lastName, email, phoneNumber, country, state, gender } =
 		userData || {};
 
@@ -121,35 +123,30 @@ export default function ApplyForTechSupport() {
 		setLoading(true);
 
 		try {
-			// Make the POST request to the API
-			const response = await fetch(
-				`${baseUrl.url}/api/v1/register/tech`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(techSupportFormData),
-				}
-			);
-			// console.log(response);
+			const response = await fetch(`${baseUrl.url}/api/v1/register/tech`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(techSupportFormData),
+			});
+			const data = await response.json();
 
-			setLoading(false);
-
-			if (response.status === 200) {
-				// console.log("Form data sent:", techSupportFormData);
+			if ((data.status = "fail")) {
+				setShowAlreadyTech(true);
+				setLoading(false);
+			} else if ((data.status = "success")) {
 				setShowTechSuccess(true);
 			}
+
+			setLoading(false);
 		} catch (error) {
 			setLoading(false);
-			// console.log("API Fetch Error:", error);
 
-			// Check if the error is network-related
 			if (
 				error instanceof TypeError &&
 				error.message.includes("Failed to fetch")
 			) {
-				// Show the NetworkError modal
 				setShowNetworkError(true);
 			}
 		}
@@ -157,34 +154,24 @@ export default function ApplyForTechSupport() {
 
 	return (
 		<div>
-			{/* <Navbar /> */}
+			<Nav />
 
 			<div
 				id="top"
 				className={`relative bg-orange-50 h-fit flex flex-col justify-center items-center mx-auto relative py-20 ${ApplyForTechSupportCSS.heading}`}>
-				<div className={ApplyForTechSupportCSS.decor}>
-					{/* <FormVector position={"left-10 top-10"} /> */}
-					{/* <FormVector position={"top-10"} /> */}
-					<FormVector position={"right-10 top-30"} />
-					<FormVector position={"left-10"} />
-					{/* <FormVector position={'right-10'} /> */}
-				</div>
-
 				<div
-					className={`text-center w-1/2 mt-15 space-y-3 ${ApplyForTechSupportCSS.title}`}>
+					className={`text-center w-1/2 h-fit space-y-3 ${ApplyForTechSupportCSS.title}`}>
 					<h1 className="text-5xl text-orange-500 font-semibold">
-						Apply For {"Tech Support"}
+						Apply For Tech Support
 					</h1>
 					<p>Need it? Go for it!</p>
 					<h3 className="text-xl font-semibold">
 						{"Only available for Technology Applicants"}
 					</h3>
 				</div>
-				{/* ... (other JSX content) */}
+
 				<div className={ApplyForTechSupportCSS.main}>
 					{isEmailVerified ? (
-						// Render the main form if email is verified
-						// Use the received userData for the non-editable fields
 						<form onSubmit={handleSubmit}>
 							{/* Non-editable fields */}
 
@@ -211,7 +198,6 @@ export default function ApplyForTechSupport() {
 								inputId="email" //
 								type="email"
 								value={userData.data.email || ""}
-								// onChange={(e) => setEmail(e.target.value)}
 							/>
 
 							<div className={ApplyForTechSupportCSS.smallinputholder}>
@@ -274,9 +260,9 @@ export default function ApplyForTechSupport() {
 											<TextArea
 												labelText="Why do you want to participate in the scholarship programme?"
 												placeholder={"Write here"}
-												htmlFor="whyParticipateInScholarship" // Pass the htmlFor prop for label element
-												inputId="whyParticipateInScholarship" // Pass the inputId prop for input element
-												type="text" // Pass the type prop for input element
+												htmlFor="whyParticipateInScholarship"
+												inputId="whyParticipateInScholarship"
+												type="text"
 												value={whyParticipateInScholarship}
 												onChange={(e) =>
 													setWhyParticipateInScholarship(e.target.value)
@@ -418,12 +404,10 @@ export default function ApplyForTechSupport() {
 							{errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 
 							{/* Submit button */}
-
-							{loading ? (
-								<button className="btn3">Please wait...</button>
-							) : (
-								<FormBtn btnFor="Submit" />
-							)}
+							<FormBtn
+								btnFor={loading ? "Please wait..." : "Submit"}
+								isLoading={loading}
+							/>
 						</form>
 					) : (
 						// Render the EmailVerification component if email is not verified
@@ -448,6 +432,9 @@ export default function ApplyForTechSupport() {
 			)}
 			{showRequiredFields && (
 				<RequiredFields onClose={() => setShowRequiredFields(false)} />
+			)}
+			{showAlreadyTech && (
+				<AlreadyTech onClose={() => setShowAlreadyTech(false)} />
 			)}
 		</div>
 	);

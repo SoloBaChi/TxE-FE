@@ -1,8 +1,14 @@
+import React from "react";
 import "../modals/Modals.css";
 import info from "../assets/info.svg";
+import linkarrow1 from "../assets/link-arrow1.svg";
+import linkarrow2 from "../assets/link-arrow2.svg";
 import close from "../assets/close.svg";
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export const AlreadyRegistered = () => {
+export const AlreadyTech = () => {
+	const navigate = useNavigate();
 	const handleRefresh = () => {
 		window.location.reload(); // Refresh the page
 	};
@@ -49,14 +55,18 @@ export const AlreadyRegistered = () => {
 					</div>
 					<div className="modal-message">
 						<h2>Oops!</h2>
-						<p>Looks like you have already registered for this event.</p>
-						<small>Kindly check your email for your ticket. </small>
+						<p>You have previously applied for Tech Support</p>
+						<small>Kindly check your email for updates </small>
 					</div>
 				</div>
 
 				<div className="modal-cta">
 					<button className="btn1">Contact us</button>
-					<button className="btn2">Event Schedule</button>
+					<button
+						className="btn2"
+						onClick={() => navigate("/")}>
+						Back to Home
+					</button>
 				</div>
 			</div>
 		</div>
