@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import InputField from "../../registrationPage/eventregistration/components/InputField/InputField";
 import FormBtn from "../../registrationPage/eventregistration/components/Buttons/FormButton";
 import ApplyForTechSupportCSS from "../techSupport/ApplyForTechSupport.module.css";
-import FailedModal from "../../modals/FailedModal";
+
 import { TechIneligible } from "../../modals/TechIneligible";
 import { useNavigate, Navigate } from "react-router-dom";
 import { NotRegistered } from "../../modals/NotRegistered";
@@ -17,7 +17,7 @@ const EmailVerification = ({ onSuccess, onUserData }) => {
 	const [showTechIneligible, setShowTechIneligible] = useState(false);
 	const [showNotRegistered, setShowNotRegistered] = useState(false);
 	const [showInvalidEmail, setShowInvalidEmail] = useState(false);
-	const [showNetworkError, setShowNetworkError] = useState(true);
+	const [showNetworkError, setShowNetworkError] = useState(false);
 	const [loading, setLoading] = useState(false);
 
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -60,7 +60,6 @@ const EmailVerification = ({ onSuccess, onUserData }) => {
 			.catch((error) => {
 				setLoading(false);
 
-				// Check if the error is network-related
 				if (
 					error instanceof TypeError &&
 					error.message.includes("Failed to fetch")

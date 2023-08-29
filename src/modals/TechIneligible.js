@@ -2,7 +2,10 @@ import "../modals/Modals.css";
 import info from "../assets/info.svg";
 import close from "../assets/close.svg";
 
-export const TechIneligible = () => {
+export const TechIneligible = ({ onClose }) => {
+	const handleNavigate = () => {
+		window.open = ("https://forms.gle/h6reLGjNLYi7hC7E9", "_blank");
+	};
 	return (
 		<div className="modal-overlay">
 			<div className="modal">
@@ -14,7 +17,7 @@ export const TechIneligible = () => {
 						/>
 						<p>Information</p>
 					</div>
-					<span>
+					<span onClick={onClose}>
 						<img
 							src={close}
 							alt=""
@@ -66,13 +69,16 @@ export const TechIneligible = () => {
 							You are not eligible for the tech scholarship, as you already
 							registered for the business track.
 						</p>
-						<small>Click the link below to apply for business grant.</small>
+						<small>Only available for Technology Applicants</small>
 					</div>
 				</div>
 
 				<div className="modal-cta">
-					<button className="btn1">Close</button>
-					<button className="btn2">Register</button>
+					<button
+						onClick={handleNavigate}
+						className="btn2">
+						Apply for Business Grant
+					</button>
 				</div>
 			</div>
 		</div>

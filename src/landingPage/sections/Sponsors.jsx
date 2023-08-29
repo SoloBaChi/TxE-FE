@@ -21,7 +21,7 @@ const Sponsors = () => {
 	return (
 		<div className="flex flex-col justify-center items-center p-6 bg-white shadow-sm rounded-md lg:w-3/4 overflow-hidden sponsors">
 			<h1 className="text-lg font-semibold">
-				<b>Proudly Sponsored By</b>
+				<b>Our Sponsors</b>
 			</h1>
 			<div className="slide-container">
 				<div className="slide-wrapper">
@@ -30,16 +30,17 @@ const Sponsors = () => {
 							key={index}
 							src={src}
 							loading="lazy"
-							className="mx-8 md:mx-16"
+							className="mx-8 md:mx-16 sponsor"
 							alt=""
 						/>
 					))}
+
 					{images.map((src, index) => (
 						<img
 							key={index + images.length}
 							src={src}
 							loading="lazy"
-							className="mx-8 md:mx-16"
+							className="mx-8 md:mx-16 sponsor"
 							alt=""
 						/>
 					))}

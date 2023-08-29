@@ -1,15 +1,21 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import BtnPrimary from "../buttons/BtnPrimary";
 import BtnSecondary from "../buttons/BtnSecondary";
 import animation1 from "../../assets/animation-img-1-min.jpeg";
 import animation4 from "../../assets/animation-img-4.svg";
 import enugu from "../../assets/esg-logo.svg";
 import { CSSTransition } from "react-transition-group";
+
 import "../Landing.css";
 
 const Banner = () => {
+	const bannerRef = useRef(null);
 	const [isAnimating, setIsAnimating] = useState(false);
+
+	const goToLink = () => {
+		window.open("https://forms.gle/bFTp54crgGH6J2288", "_blank");
+	};
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -42,8 +48,11 @@ const Banner = () => {
 				in={true}
 				appear={true}
 				timeout={1000}
-				classNames="slide">
-				<div className="mt-10 banner-text">
+				classNames="slide"
+				nodeRef={bannerRef}>
+				<div
+					ref={bannerRef}
+					className="mt-10 banner-text">
 					<h1 className="text-4xl md:text-6xl text-white font-bold">
 						<span className="orange">ENUGU</span> Tech & Entrepreneurship Summit
 						2023
@@ -52,12 +61,14 @@ const Banner = () => {
 						The Enugu Tech and Entrepreneurship (TxE) Summit 2nd edition. Enugu
 						TxE aims to ignite innovation, foster collaboration, and empower the
 						local entrepreneurial community. The summit aims to drive economic
-						growth and position Enugu as a leading tech hub in South East,
-						Nigeria.{" "}
+						growth and position Enugu as a leading center for innovation in
+						South East, Nigeria.
 					</p>
 					<div className="banner-buttons mt-10">
-						<div className="cursor-pointer h-fit w-full">
-							<BtnSecondary btnName={"Partner With Us"} />
+						<div
+							onClick={goToLink}
+							className="cursor-pointer h-fit w-full">
+							<BtnSecondary btnName={"Get a Booth"} />
 						</div>
 						<div
 							className="cursor-pointer  w-full h-fit"
@@ -87,8 +98,10 @@ const Banner = () => {
 					in={true}
 					appear={true}
 					timeout={1000}
-					classNames="slide">
+					classNames="slide"
+					nodeRef={bannerRef}>
 					<img
+						ref={bannerRef}
 						className="animation-1"
 						src={images[currentImageIndex]}
 						alt=""

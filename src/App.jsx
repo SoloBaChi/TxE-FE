@@ -20,14 +20,7 @@ const App = () => {
 					path="/register"
 					element={<EventRegForm />}
 				/>
-				<Route
-					path="/techsupport"
-					element={<ApplyForTechSupport />}
-				/>
-				<Route
-					path="/grant"
-					element={<ApplyForGrant />}
-				/>
+
 				<Route
 					path="/ticket/:userId"
 					element={<TicketPage />}
@@ -35,10 +28,6 @@ const App = () => {
 				<Route
 					path="*"
 					element={<NotFoundPage />}
-				/>
-				<Route
-					path="/email-template"
-					element={<EmailTemplate />}
 				/>
 			</Routes>
 		</BrowserRouter>

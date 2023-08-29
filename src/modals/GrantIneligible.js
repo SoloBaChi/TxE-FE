@@ -5,7 +5,7 @@ import close from "../assets/close.svg";
 
 export const GrantIneligible = ({ onClose }) => {
 	const handleNavigate = () => {
-		window.location.href = "/techsupport";
+		window.open("https://forms.gle/wvnbwGtwGCAqSiBh7", "_blank");
 	};
 	return (
 		<div className="modal-overlay">
@@ -66,11 +66,11 @@ export const GrantIneligible = ({ onClose }) => {
 					</div>
 					<div className="modal-message">
 						<h2>Hello there!</h2>
-						<small>Only available for Entreprenuership Applicants</small>
 						<p>
 							You are not eligible for the business grant, as you already
 							registered for the tech track.
 						</p>
+						<small>Only available for Entreprenuership Applicants</small>
 					</div>
 				</div>
 
@@ -78,7 +78,7 @@ export const GrantIneligible = ({ onClose }) => {
 					<button
 						onClick={handleNavigate}
 						className="btn2">
-						Register for Tech Support
+						Apply for Tech Support
 					</button>
 				</div>
 			</div>

@@ -1,10 +1,19 @@
-import win from "../../assets/winPC.jpg";
+import win from "../../assets/winPC.png";
 import scholarship from "../../assets/scholarship-min.png";
 import win1 from "../../assets/txe-win2.png";
 import "../Landing.css";
 import { useNavigate } from "react-router-dom";
 
 const Highlight = () => {
+	const goToGrant = () => {
+		window.open("https://forms.gle/h6reLGjNLYi7hC7E9", "_blank");
+	};
+	const goToLaptop = () => {
+		window.open("https://forms.gle/wvnbwGtwGCAqSiBh7", "_blank");
+	};
+	const goToTechSupport = () => {
+		window.open("https://forms.gle/xUwowPbsNtE6DvbPA", "_blank");
+	};
 	const navigate = useNavigate();
 	return (
 		<div
@@ -26,7 +35,7 @@ const Highlight = () => {
 			</div>
 
 			<div className="lg:flex highlight-container mt-10 lg:mt-0 space-y-5 md:space-y-0 lg:space-x-5 text-gray-400 box-holder">
-				<div className="flex flex-col justify-between items-center highlight-box">
+				<div className="flex flex-col justify-center items-center highlight-box">
 					<div className="px-4 py-8 rounded-md h-fit space-y-4 flex flex-col justify-center items-center text-center lg:text-center lg:justify-center lg:items-center">
 						<div className="w-fit h-fit rounded-md overflow-none">
 							<img
@@ -42,7 +51,7 @@ const Highlight = () => {
 						</p>
 						<div
 							className="text-orange-500 bg-orange flex justify-center items-center text-center text-white rounded-md w-64 py-3 cursor-pointer"
-							onClick={() => navigate("/grant")}>
+							onClick={goToGrant}>
 							Apply
 						</div>
 					</div>
@@ -63,7 +72,7 @@ const Highlight = () => {
 						</p>
 						<div
 							className="text-orange-500 bg-orange flex justify-center items-center text-center text-white rounded-md w-64 py-3 cursor-pointer"
-							onClick={() => navigate("/techsupport")}>
+							onClick={goToLaptop}>
 							Apply
 						</div>
 					</div>
@@ -86,7 +95,7 @@ const Highlight = () => {
 						</p>
 						<div
 							className="text-orange-500 bg-orange flex justify-center items-center text-center text-white rounded-md w-64 py-3 cursor-pointer"
-							onClick={() => navigate("/techsupport")}>
+							onClick={goToTechSupport}>
 							Apply
 						</div>
 					</div>
